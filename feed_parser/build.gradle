@@ -1,0 +1,31 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+startScripts.enabled = false
+
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+}
+
+repositories {
+  mavenCentral()
+}
+dependencies {
+  compile 'com.rometools:rome:1.6.0'
+}
+
+
+task feedParser(type: CreateStartScripts) {
+  mainClassName = "Maalgm.feedParser"
+  applicationName = "feed-parser"
+  outputDir = new File(project.buildDir, 'tmp')
+  classpath = jar.outputs.files + project.configurations.runtime
+}
+
+applicationDistribution.into("bin") {
+  from(feedParser)
+  fileMode = 0755
+}
+
