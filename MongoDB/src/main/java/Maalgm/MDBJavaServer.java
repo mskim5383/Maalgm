@@ -20,6 +20,10 @@ public class MDBJavaServer {
     public static void main(String[] args) {
       MongoClient mongoClient = new MongoClient();
       MongoDatabase db = mongoClient.getDatabase("grpcdb");
+      /*
+       * To signup, get the username, passwd, realname from the frontend somehow, 
+       * then put them directly in the append() statements below.
+       */
       db.getCollection("peruser").insertOne(
           new Document()
               .append("username", "username001")
@@ -27,7 +31,13 @@ public class MDBJavaServer {
               .append("realname", "John Smith")
               .append("urllist", asList())
               .append("urlcount", 0));
-      FindIterable<Document> iterable = db.getCollection("peruser").find();
+
+
+      /*
+       * To login, get the username, passwd from the frontend somehow,
+       * then put them consequently instead of "username001", "1234567890" below.
+       */ 
+      FindIterable<Document> iterable = db.getCollection("peruser").find(new Document("username", "username001").append("passwd", "1234567890"));
       iterable.forEach(new Block<Document>() {
         @Override
         public void apply(final Document document) {
