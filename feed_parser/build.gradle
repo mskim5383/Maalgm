@@ -14,18 +14,26 @@ repositories {
 }
 dependencies {
   compile 'com.rometools:rome:1.6.0'
+  compile "com.googlecode.json-simple:json-simple:1.1"
 }
 
 
 task feedParser(type: CreateStartScripts) {
-  mainClassName = "Maalgm.feedParser"
+  mainClassName = "Maalgm.FeedParser"
   applicationName = "feed-parser"
   outputDir = new File(project.buildDir, 'tmp')
   classpath = jar.outputs.files + project.configurations.runtime
 }
 
+task feedParserSample(type: CreateStartScripts) {
+  mainClassName = "Maalgm.FeedParserSample"
+  applicationName = "feed-parser-sample"
+  outputDir = new File(project.buildDir, 'tmp')
+  classpath = jar.outputs.files + project.configurations.runtime
+}
+
 applicationDistribution.into("bin") {
-  from(feedParser)
+  from(feedParserSample)
   fileMode = 0755
 }
 
