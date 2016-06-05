@@ -1,4 +1,4 @@
-package Maalgm;
+package maalgm;
 
 import org.bson.Document;
 import com.mongodb.Block;
@@ -16,20 +16,21 @@ import static java.util.Arrays.asList;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
  
-public class MDBJavaSignup {
+public class MDBJavaLogin {
     public static void main(String[] args) {
       MongoClient mongoClient = new MongoClient();
       MongoDatabase db = mongoClient.getDatabase("grpcdb");
       /*
-       * To signup, get the username, passwd, realname from the frontend somehow, 
-       * then put them directly in the append() statements below.
-       */
-      db.getCollection("peruser").insertOne(
-          new Document()
-              .append("username", "username001")
-              .append("passwd", "1234567890")
-              .append("realname", "John Smith")
-              .append("urllist", asList())
-              .append("urlcount", 0));
+       * To login, get the username, passwd from the frontend somehow,
+       * then put them consequently instead of "username001", "1234567890" below.
+       */ 
+      FindIterable<Document> iterable = db.getCollection("peruser").find(
+          new Document("username", "username001").append("passwd", "1234567890"));
+      iterable.forEach(new Block<Document>() {
+          @Override
+          public void apply(final Document document) {
+            System.out.println(document);
+          }
+      });
     }    
 }
