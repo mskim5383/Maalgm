@@ -22,10 +22,8 @@ public class FeedParser {
 
       JSONArray feedList = new JSONArray();
 
-      List entries = feed.getEntries();
-      for (int i = 0; i < entries.size(); i++) {
-        SyndEntry entry = (SyndEntry) entries.get(i);
-
+      List<SyndEntry> entries = feed.getEntries();
+      for (SyndEntry entry : entries) {
         JSONObject feedjson = new JSONObject();
         feedjson.put("feedTitle", entry.getTitle());
         feedjson.put("feedAuthor", entry.getAuthor());
