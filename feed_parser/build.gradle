@@ -12,9 +12,12 @@ buildscript {
 repositories {
   mavenCentral()
 }
+
 dependencies {
   compile 'com.rometools:rome:1.6.0'
-  compile "com.googlecode.json-simple:json-simple:1.1"
+  compile 'com.googlecode.json-simple:json-simple:1.1'
+  compile 'com.google.guava:guava:19.0'
+  testCompile 'junit:junit:4.12'
 }
 
 

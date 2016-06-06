@@ -1,5 +1,7 @@
 package Maalgm;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import java.net.URL;
 import java.util.List;
 import com.rometools.rome.feed.synd.SyndFeed;
@@ -10,6 +12,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class FeedParser {
+  @VisibleForTesting
   public static String getFeed(String rssUrl) {
     JSONObject ret = new JSONObject();
     try {
