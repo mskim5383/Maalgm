@@ -59,21 +59,22 @@ public class MaalgmServer {
   @VisibleForTesting
   static class MaalgmLoginImpl implements sessionGrpc.session {
 
-    private int retrieveSessionId(String username, String password) {
+    private String retrieveSessionId(String username, String password) {
       //check the login info
       //get a new session id from the DB
-      return 1;
+      return "1";
     }
 
     @Override
     public void login(Session.LoginRequest request,
-                      StreamObserver<Session.SessionResponse> responseObserver) {
+                      StreamObserver<Session.LoginResponse> responseObserver) {
 
       String username = request.getUsername();
       String password = request.getPassword();
       System.out.println("username : " + username + "\npassword : " + password);
 
-      Session.SessionResponse response = Session.SessionResponse.newBuilder()
+      Session.LoginResponse response = Session.LoginResponse.newBuilder()
+          .setStatus("200")
           .setSessionId(
               retrieveSessionId(username, password)
           ).build();
@@ -82,10 +83,27 @@ public class MaalgmServer {
     }
 
     @Override
-    public void getUsername(Session.SessionRequest request, StreamObserver<Session.UsernameResponse> responseObserver) {
-      System.out.println("getUsername Request called.");
+    public void logout(Session.SessionId request, StreamObserver<Session.StatusResponse> responseObserver) {
+      Session.StatusResponse response = Session.StatusResponse.newBuilder()
+          .setStatus("200")
+          .build();
+      responseObserver.onNext(response);
+      responseObserver.onCompleted();
+    }
 
-      Session.UsernameResponse response = Session.UsernameResponse.newBuilder()
+    @Override
+    public void signUp(Session.SignUpRequest request, StreamObserver<Session.StatusResponse> responseObserver) {
+      Session.StatusResponse response = Session.StatusResponse.newBuilder()
+          .setStatus("200")
+          .build();
+      responseObserver.onNext(response);
+      responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getSessionData(Session.SessionId request, StreamObserver<Session.SessionDataResponse> responseObserver) {
+      System.out.println("getUsername Request called.");
+      Session.SessionDataResponse response = Session.SessionDataResponse.newBuilder()
           .setUsername(
              "this is the dummy username response"
           ).build();
@@ -94,7 +112,7 @@ public class MaalgmServer {
     }
 
     @Override
-    public void getFeedList(Session.SessionRequest request, StreamObserver<Session.FeedListResponse> responseObserver) {
+    public void getFeedList(Session.FeedListRequest request, StreamObserver<Session.FeedListResponse> responseObserver) {
       System.out.println("getFeedList Request called.");
 
       Session.FeedListResponse.Builder resBuilder = Session.FeedListResponse.newBuilder();
@@ -105,6 +123,28 @@ public class MaalgmServer {
       Session.FeedListResponse response = resBuilder.build();
       responseObserver.onNext(response);
       responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getUrlList(Session.SessionId request, StreamObserver<Session.UrlListResponse> responseObserver) {
+      Session.UrlListResponse.Builder resBuilder = Session.UrlListResponse.newBuilder();
+      resBuilder.addUrlList("http://www.bbc.co.uk");
+      resBuilder.addUrlList("http://www.nytimes.com");
+      resBuilder.addUrlList("http://www.startupweekly.com");
+      resBuilder.addUrlList("http://www.google.com");
+      Session.UrlListResponse response = resBuilder.build();
+      responseObserver.onNext(response);
+      responseObserver.onCompleted();
+    }
+
+    @Override
+    public void insertUrl(Session.InsertUrlRequest request, StreamObserver<Session.StatusResponse> responseObserver) {
+      Session.StatusResponse response = Session.StatusResponse.newBuilder()
+          .setStatus("200")
+          .build();
+      responseObserver.onNext(response);
+      responseObserver.onCompleted();
+
     }
   }
 

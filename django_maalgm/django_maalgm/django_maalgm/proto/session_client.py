@@ -19,7 +19,8 @@ def login(username, password, ip, port):
     response = stub.login(
         session_pb2.LoginRequest(username=username, password=password),
         _TIMEOUT_SECONDS)
-    print("received session id is : " + str(response.sessionId))
+    print("LOGIN response : sessionId: " +
+          response.sessionId + ", status: " + response.status)
     return response.sessionId
 
 
@@ -29,6 +30,7 @@ def logout(sessionId, ip, port):
         session_pb2.SessionId(sessionId=sessionId),
         _TIMEOUT_SECONDS)
     # check status and do something?
+    print("LOGOUT response : status: " + response.status)
     return response.status
 
 
@@ -37,6 +39,7 @@ def sign_up(username, password, ip, port):
     response = stub.signUp(
         session_pb2.SignUpRequest(username=username, password=password),
         _TIMEOUT_SECONDS)
+    print("SIGN_UP response : status: " + response.status)
     return response.status
 
 
@@ -45,7 +48,7 @@ def get_session_data(sessionId, ip, port):
     response = stub.getSessionData(
         session_pb2.SessionId(sessionId=sessionId),
         _TIMEOUT_SECONDS)
-    print("received get_username response : " + str(response.username))
+    print("GET_SESSION_DATA response : " + response.username)
     return response.username
 
 
@@ -54,7 +57,7 @@ def get_feed_list(sessionId, url, ip, port):
     response = stub.getFeedList(
         session_pb2.FeedListRequest(sessionId=sessionId, url=url),
         _TIMEOUT_SECONDS)
-    print("received get_feed_list response : " + str(response.feedList))
+    print("GET_FEED_LIST response : " + str(response.feedList))
     return response.feedList
 
 
@@ -63,6 +66,7 @@ def get_url_list(sessionId, ip, port):
     response = stub.getUrlList(
         session_pb2.SessionId(sessionId=sessionId),
         _TIMEOUT_SECONDS)
+    print("GET_URL_LIST response : " + str(response.urlList))
     return response.urlList
 
 
@@ -71,8 +75,15 @@ def insert_url(sessionId, url, ip, port):
     response = stub.insertUrl(
         session_pb2.InsertUrlRequest(sessionId=sessionId, url=url),
         _TIMEOUT_SECONDS)
+    print("INSERT_URL response : " + response.status)
     return response.status
 
 
 if __name__ == '__main__':
     login("zoonoo", "password", "localhost", 21035)
+    logout("sessionId", "localhost", 21035)
+    sign_up("zoonoo", "password", "localhost", 21035)
+    get_session_data("sessionId", "localhost", 21035)
+    get_feed_list("sessionId", "url", "localhost", 21035)
+    get_url_list("sessionId", "localhost", 21035)
+    insert_url("sessionId", "url", "localhost", 21035)
