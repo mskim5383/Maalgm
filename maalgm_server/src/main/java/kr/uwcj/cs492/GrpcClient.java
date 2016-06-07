@@ -46,10 +46,9 @@ public class GrpcClient {
       return;
     }
 
-    if(response.getMessage().equals("True")) {
+    if (response.getMessage().equals("True")) {
       logger.info("The return value with input number : " + number + " is True");
-    }
-    else {
+    } else {
       logger.info("The return value with input number : " + number + " is False");
     }
   }
@@ -57,20 +56,15 @@ public class GrpcClient {
   public static void main(String[] args) throws IOException {
     GrpcClient client = new GrpcClient("localhost", 21035);
 
-    while(true) {
+    while (true) {
       Scanner reader = new Scanner(System.in);
       //logger.info("Enter a integer(try \"exit\" to terminate program): ");
-      /*
-      logger.info("Enter the URL to retrieve input.");
-      String url_input = reader.nextLine();
-      URL url = new URL(url_input);
-      BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-      String input = in.readLine();
-      logger.info("input read from the url: " + input);
-      */
       String input = reader.nextLine();
 
-      if (!input.trim().equalsIgnoreCase("exit")) {
+      if (input.trim().equalsIgnoreCase("exit")) {
+        break;
+      }
+      else {
         try {
           int number = Integer.parseInt(input);
           client.askMessage(number);
@@ -78,14 +72,11 @@ public class GrpcClient {
           logger.warning("Cannot parse input as integer");
         }
       }
-      else {
-        try {
-          client.shutdown();
-          break;
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
-      }
+    }
+    try {
+      client.shutdown();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
     }
   }
 }

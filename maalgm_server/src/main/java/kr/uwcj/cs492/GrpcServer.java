@@ -57,7 +57,8 @@ public class GrpcServer {
   static class FeedImpl implements feedGrpc.feed {
 
     @Override
-    public void test(FeedServer.FeedRequest request, StreamObserver<FeedServer.FeedReply> responseObserver) {
+    public void test(FeedServer.FeedRequest request,
+                     StreamObserver<FeedServer.FeedReply> responseObserver) {
       FeedServer.FeedReply reply = FeedServer.FeedReply.newBuilder()
           .setMessage(produceMessage(request.getNumber()))
           .build();
@@ -66,7 +67,8 @@ public class GrpcServer {
       responseObserver.onCompleted();
     }
 
-    private String produceMessage(long number) { return "THIS IS A NEW MESSAGE";
+    private String produceMessage(long number) {
+      return "THIS IS A NEW MESSAGE";
     }
 
   }
