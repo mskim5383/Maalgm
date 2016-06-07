@@ -60,12 +60,15 @@ public class GrpcClient {
     while(true) {
       Scanner reader = new Scanner(System.in);
       //logger.info("Enter a integer(try \"exit\" to terminate program): ");
+      /*
       logger.info("Enter the URL to retrieve input.");
       String url_input = reader.nextLine();
       URL url = new URL(url_input);
       BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
       String input = in.readLine();
       logger.info("input read from the url: " + input);
+      */
+      String input = reader.nextLine();
 
       if (!input.trim().equalsIgnoreCase("exit")) {
         try {

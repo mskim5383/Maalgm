@@ -61,12 +61,12 @@ public class GrpcServer {
       FeedServer.FeedReply reply = FeedServer.FeedReply.newBuilder()
           .setMessage(produceMessage(request.getNumber()))
           .build();
+      System.out.println("RUNNING");
       responseObserver.onNext(reply);
       responseObserver.onCompleted();
     }
 
-    private String produceMessage(long number) {
-      return "Return Message";
+    private String produceMessage(long number) { return "THIS IS A NEW MESSAGE";
     }
 
   }
