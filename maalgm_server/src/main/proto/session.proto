@@ -3,9 +3,11 @@ syntax = "proto3";
 option java_package = "kr.uwcj.cs492";
 
 service session {
-    rpc login(LoginRequest) returns (SessionResponse) {}
-    rpc getUsername(SessionRequest) returns (UsernameResponse) {}
-    rpc getFeedList(SessionRequest) returns (FeedListResponse) {}
+    rpc login (LoginRequest) returns (LoginResponse) {}
+    rpc logout (SessionId) returns (StatusResponse) {}
+    rpc signUp (SignUpRequest) returns (StatusResponse) {}
+    rpc getSessionData (SessionId) returns (SessionDataResponse) {}
+    rpc getFeedList (SessionId) returns (FeedListResponse) {}
 }
 
 message LoginRequest {
@@ -13,18 +15,28 @@ message LoginRequest {
     string password = 2;
 }
 
-message SessionResponse {
+message LoginResponse {
     int32 sessionId = 1;
 }
 
-message UsernameResponse {
+message SessionId {
+    int32 sessionId = 1;
+}
+
+message StatusResponse {
+    string status = 1;
+}
+
+message SignUpRequest {
     string username = 1;
+    string password = 2;
+}
+
+message SessionDataResponse {
+    string status = 1;
+    string username = 2;
 }
 
 message FeedListResponse {
     repeated string feedList = 1;
-}
-
-message SessionRequest {
-    int32 sessionId = 1;
 }
