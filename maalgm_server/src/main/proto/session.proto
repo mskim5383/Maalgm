@@ -7,7 +7,9 @@ service session {
     rpc logout (SessionId) returns (StatusResponse) {}
     rpc signUp (SignUpRequest) returns (StatusResponse) {}
     rpc getSessionData (SessionId) returns (SessionDataResponse) {}
-    rpc getFeedList (SessionId) returns (FeedListResponse) {}
+    rpc getFeedList (FeedListRequest) returns (FeedListResponse) {}
+    rpc getUrlList (SessionId) returns (UrlListResponse) {}
+    rpc insertUrl (InsertUrlRequest) returns (StatusResponse) {}
 }
 
 message LoginRequest {
@@ -16,11 +18,11 @@ message LoginRequest {
 }
 
 message LoginResponse {
-    int32 sessionId = 1;
+    string sessionId = 1;
 }
 
 message SessionId {
-    int32 sessionId = 1;
+    string sessionId = 1;
 }
 
 message StatusResponse {
@@ -37,6 +39,20 @@ message SessionDataResponse {
     string username = 2;
 }
 
+message FeedListRequest {
+    string sessionId = 1;
+    string url = 2;
+}
+
 message FeedListResponse {
     repeated string feedList = 1;
+}
+
+message UrlListResponse {
+    repeated string urlList = 1;
+}
+
+message InsertUrlRequest {
+    string sessionId = 1;
+    string url = 2;
 }
