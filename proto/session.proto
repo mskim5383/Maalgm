@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_package = "kr.uwcj.cs492";
+
+service session {
+    rpc login(LoginRequest) returns (SessionResponse) {}
+}
+
+message LoginRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message SessionResponse {
+    int32 sessionId = 1;
+}
