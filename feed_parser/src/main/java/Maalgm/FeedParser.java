@@ -3,7 +3,10 @@ package Maalgm;
 import com.google.common.annotations.VisibleForTesting;
 
 import java.net.URL;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import com.rometools.rome.feed.synd.SyndCategory;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.io.SyndFeedInput;
@@ -23,7 +26,11 @@ public class FeedParser {
       ret.put("RSSTitle", feed.getTitle());
       ret.put("RSSAuthor", feed.getAuthor());
 
+      Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+      ret.put("RSSPubDate", formatter.format(feed.getPublishedDate()));
+
       JSONArray feedList = new JSONArray();
+      JSONArray categoryList = new JSONArray();
 
       List<SyndEntry> entries = feed.getEntries();
       for (SyndEntry entry : entries) {
@@ -34,8 +41,15 @@ public class FeedParser {
         feedjson.put("feedLink", entry.getLink());
 
         feedList.add(feedjson);
+
+        for (SyndCategory category : entry.getCategories()) {
+          if (!categoryList.contains(category.getName())) {
+            categoryList.add(category.getName());
+          }
+        }
       }
       ret.put("feedList", feedList);
+      ret.put("categoryList", categoryList);
       ret.put("result", "success");
     } catch (Exception e) {
       ret.put("result", "error");
