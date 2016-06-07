@@ -80,7 +80,32 @@ public class MaalgmServer {
       responseObserver.onNext(response);
       responseObserver.onCompleted();
     }
-  }
 
+    @Override
+    public void getUsername(Session.SessionRequest request, StreamObserver<Session.UsernameResponse> responseObserver) {
+      System.out.println("getUsername Request called.");
+
+      Session.UsernameResponse response = Session.UsernameResponse.newBuilder()
+          .setUsername(
+             "this is the dummy username response"
+          ).build();
+      responseObserver.onNext(response);
+      responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getFeedList(Session.SessionRequest request, StreamObserver<Session.FeedListResponse> responseObserver) {
+      System.out.println("getFeedList Request called.");
+
+      Session.FeedListResponse.Builder resBuilder = Session.FeedListResponse.newBuilder();
+      resBuilder.addFeedList("http://www.bbc.co.uk");
+      resBuilder.addFeedList("http://www.nytimes.com");
+      resBuilder.addFeedList("http://www.startupweekly.com");
+      resBuilder.addFeedList("http://www.google.com");
+      Session.FeedListResponse response = resBuilder.build();
+      responseObserver.onNext(response);
+      responseObserver.onCompleted();
+    }
+  }
 
 }

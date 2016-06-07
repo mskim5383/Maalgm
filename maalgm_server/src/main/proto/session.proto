@@ -4,6 +4,8 @@ option java_package = "kr.uwcj.cs492";
 
 service session {
     rpc login(LoginRequest) returns (SessionResponse) {}
+    rpc getUsername(SessionRequest) returns (UsernameResponse) {}
+    rpc getFeedList(SessionRequest) returns (FeedListResponse) {}
 }
 
 message LoginRequest {
@@ -12,5 +14,17 @@ message LoginRequest {
 }
 
 message SessionResponse {
+    int32 sessionId = 1;
+}
+
+message UsernameResponse {
+    string username = 1;
+}
+
+message FeedListResponse {
+    repeated string feedList = 1;
+}
+
+message SessionRequest {
     int32 sessionId = 1;
 }

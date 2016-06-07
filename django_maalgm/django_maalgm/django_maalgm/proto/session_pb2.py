@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='session.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\rsession.proto\"2\n\x0cLoginRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"$\n\x0fSessionResponse\x12\x11\n\tsessionId\x18\x01 \x01(\x05\x32\x35\n\x07session\x12*\n\x05login\x12\r.LoginRequest\x1a\x10.SessionResponse\"\x00\x42\x0f\n\rkr.uwcj.cs492b\x06proto3')
+  serialized_pb=_b('\n\rsession.proto\"2\n\x0cLoginRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"$\n\x0fSessionResponse\x12\x11\n\tsessionId\x18\x01 \x01(\x05\"$\n\x10UsernameResponse\x12\x10\n\x08username\x18\x01 \x01(\t\"$\n\x10\x46\x65\x65\x64ListResponse\x12\x10\n\x08\x66\x65\x65\x64List\x18\x01 \x03(\t\"#\n\x0eSessionRequest\x12\x11\n\tsessionId\x18\x01 \x01(\x05\x32\x9f\x01\n\x07session\x12*\n\x05login\x12\r.LoginRequest\x1a\x10.SessionResponse\"\x00\x12\x33\n\x0bgetUsername\x12\x0f.SessionRequest\x1a\x11.UsernameResponse\"\x00\x12\x33\n\x0bgetFeedList\x12\x0f.SessionRequest\x1a\x11.FeedListResponse\"\x00\x42\x0f\n\rkr.uwcj.cs492b\x06proto3')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -94,8 +94,104 @@ _SESSIONRESPONSE = _descriptor.Descriptor(
   serialized_end=105,
 )
 
+
+_USERNAMERESPONSE = _descriptor.Descriptor(
+  name='UsernameResponse',
+  full_name='UsernameResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='username', full_name='UsernameResponse.username', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=107,
+  serialized_end=143,
+)
+
+
+_FEEDLISTRESPONSE = _descriptor.Descriptor(
+  name='FeedListResponse',
+  full_name='FeedListResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='feedList', full_name='FeedListResponse.feedList', index=0,
+      number=1, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=145,
+  serialized_end=181,
+)
+
+
+_SESSIONREQUEST = _descriptor.Descriptor(
+  name='SessionRequest',
+  full_name='SessionRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='sessionId', full_name='SessionRequest.sessionId', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=183,
+  serialized_end=218,
+)
+
 DESCRIPTOR.message_types_by_name['LoginRequest'] = _LOGINREQUEST
 DESCRIPTOR.message_types_by_name['SessionResponse'] = _SESSIONRESPONSE
+DESCRIPTOR.message_types_by_name['UsernameResponse'] = _USERNAMERESPONSE
+DESCRIPTOR.message_types_by_name['FeedListResponse'] = _FEEDLISTRESPONSE
+DESCRIPTOR.message_types_by_name['SessionRequest'] = _SESSIONREQUEST
 
 LoginRequest = _reflection.GeneratedProtocolMessageType('LoginRequest', (_message.Message,), dict(
   DESCRIPTOR = _LOGINREQUEST,
@@ -111,6 +207,27 @@ SessionResponse = _reflection.GeneratedProtocolMessageType('SessionResponse', (_
   ))
 _sym_db.RegisterMessage(SessionResponse)
 
+UsernameResponse = _reflection.GeneratedProtocolMessageType('UsernameResponse', (_message.Message,), dict(
+  DESCRIPTOR = _USERNAMERESPONSE,
+  __module__ = 'session_pb2'
+  # @@protoc_insertion_point(class_scope:UsernameResponse)
+  ))
+_sym_db.RegisterMessage(UsernameResponse)
+
+FeedListResponse = _reflection.GeneratedProtocolMessageType('FeedListResponse', (_message.Message,), dict(
+  DESCRIPTOR = _FEEDLISTRESPONSE,
+  __module__ = 'session_pb2'
+  # @@protoc_insertion_point(class_scope:FeedListResponse)
+  ))
+_sym_db.RegisterMessage(FeedListResponse)
+
+SessionRequest = _reflection.GeneratedProtocolMessageType('SessionRequest', (_message.Message,), dict(
+  DESCRIPTOR = _SESSIONREQUEST,
+  __module__ = 'session_pb2'
+  # @@protoc_insertion_point(class_scope:SessionRequest)
+  ))
+_sym_db.RegisterMessage(SessionRequest)
+
 
 DESCRIPTOR.has_options = True
 DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\rkr.uwcj.cs492'))
@@ -125,6 +242,12 @@ class BetasessionServicer(object):
   @abc.abstractmethod
   def login(self, request, context):
     raise NotImplementedError()
+  @abc.abstractmethod
+  def getUsername(self, request, context):
+    raise NotImplementedError()
+  @abc.abstractmethod
+  def getFeedList(self, request, context):
+    raise NotImplementedError()
 
 class BetasessionStub(object):
   """The interface to which stubs will conform."""
@@ -133,17 +256,35 @@ class BetasessionStub(object):
   def login(self, request, timeout):
     raise NotImplementedError()
   login.future = None
+  @abc.abstractmethod
+  def getUsername(self, request, timeout):
+    raise NotImplementedError()
+  getUsername.future = None
+  @abc.abstractmethod
+  def getFeedList(self, request, timeout):
+    raise NotImplementedError()
+  getFeedList.future = None
 
 def beta_create_session_server(servicer, pool=None, pool_size=None, default_timeout=None, maximum_timeout=None):
   import session_pb2
   import session_pb2
+  import session_pb2
+  import session_pb2
+  import session_pb2
+  import session_pb2
   request_deserializers = {
+    ('session', 'getFeedList'): session_pb2.SessionRequest.FromString,
+    ('session', 'getUsername'): session_pb2.SessionRequest.FromString,
     ('session', 'login'): session_pb2.LoginRequest.FromString,
   }
   response_serializers = {
+    ('session', 'getFeedList'): session_pb2.FeedListResponse.SerializeToString,
+    ('session', 'getUsername'): session_pb2.UsernameResponse.SerializeToString,
     ('session', 'login'): session_pb2.SessionResponse.SerializeToString,
   }
   method_implementations = {
+    ('session', 'getFeedList'): face_utilities.unary_unary_inline(servicer.getFeedList),
+    ('session', 'getUsername'): face_utilities.unary_unary_inline(servicer.getUsername),
     ('session', 'login'): face_utilities.unary_unary_inline(servicer.login),
   }
   server_options = beta_implementations.server_options(request_deserializers=request_deserializers, response_serializers=response_serializers, thread_pool=pool, thread_pool_size=pool_size, default_timeout=default_timeout, maximum_timeout=maximum_timeout)
@@ -152,13 +293,23 @@ def beta_create_session_server(servicer, pool=None, pool_size=None, default_time
 def beta_create_session_stub(channel, host=None, metadata_transformer=None, pool=None, pool_size=None):
   import session_pb2
   import session_pb2
+  import session_pb2
+  import session_pb2
+  import session_pb2
+  import session_pb2
   request_serializers = {
+    ('session', 'getFeedList'): session_pb2.SessionRequest.SerializeToString,
+    ('session', 'getUsername'): session_pb2.SessionRequest.SerializeToString,
     ('session', 'login'): session_pb2.LoginRequest.SerializeToString,
   }
   response_deserializers = {
+    ('session', 'getFeedList'): session_pb2.FeedListResponse.FromString,
+    ('session', 'getUsername'): session_pb2.UsernameResponse.FromString,
     ('session', 'login'): session_pb2.SessionResponse.FromString,
   }
   cardinalities = {
+    'getFeedList': cardinality.Cardinality.UNARY_UNARY,
+    'getUsername': cardinality.Cardinality.UNARY_UNARY,
     'login': cardinality.Cardinality.UNARY_UNARY,
   }
   stub_options = beta_implementations.stub_options(host=host, metadata_transformer=metadata_transformer, request_serializers=request_serializers, response_deserializers=response_deserializers, thread_pool=pool, thread_pool_size=pool_size)
