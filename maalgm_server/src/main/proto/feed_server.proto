@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option java_package = "kr.uwcj.cs492";
+
+service feed {
+    rpc Test (FeedRequest) returns (FeedReply) {}
+}
+
+message FeedRequest {
+    int32 number = 1;
+}
+
+message FeedReply {
+    string message = 1;
+}

@@ -1,0 +1,74 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'com.google.protobuf'
+apply plugin: 'idea'
+apply plugin: 'checkstyle'
+
+startScripts.enabled = false
+
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'com.google.protobuf:protobuf-gradle-plugin:0.7.4'
+  }
+}
+
+repositories {
+  mavenCentral()
+}
+dependencies {
+  compile 'io.grpc:grpc-all:0.13.2'
+  compile 'commons-cli:commons-cli:1.3.1'
+  compile 'com.google.guava:guava:19.0'
+
+  testCompile 'junit:junit:4.12'
+}
+
+protobuf {
+  protoc {
+    // The version of protoc must match protobuf-java. If you don't depend on
+    // protobuf-java directly, you will be transitively depending on the
+    // protobuf-java version that grpc depends on.
+    artifact = "com.google.protobuf:protoc:3.0.0-beta-2"
+  }
+  protobuf {
+    generatedFilesBaseDir = "$projectDir/src/generated"
+  }
+  plugins {
+    grpc {
+      artifact = 'io.grpc:protoc-gen-grpc-java:0.13.2'
+    }
+  }
+  generateProtoTasks {
+    all()*.plugins {
+      grpc {}
+    }
+  }
+}
+
+task GrpcServer (type: CreateStartScripts) {
+  mainClassName = "kr.uwcj.cs492.maalgm_server"
+  applicationName = "grpc-server"
+  outputDir = new File(project.buildDir, 'tmp')
+  classpath = jar.outputs.files + project.configurations.runtime
+}
+
+
+applicationDistribution.into("bin") {
+  from(GrpcServer)
+  fileMode = 0755
+}
+
+idea {
+  module {
+    sourceDirs += file("${projectDir}/src/generated/main/grpc")
+    sourceDirs += file("${projectDir}/src/generated/main/java")
+  }
+}
+
+checkstyle {
+  configFile = file("${projectDir}/google_checks.xml")
+  toolVersion = "6.17"
+}

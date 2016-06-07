@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+option java_package = "kr.uwcj.cs492";
+
+service session {
+    rpc login (LoginRequest) returns (LoginResponse) {}
+    rpc logout (SessionId) returns (StatusResponse) {}
+    rpc signUp (SignUpRequest) returns (StatusResponse) {}
+    rpc getSessionData (SessionId) returns (SessionDataResponse) {}
+    rpc getFeedList (FeedListRequest) returns (FeedListResponse) {}
+    rpc getUrlList (SessionId) returns (UrlListResponse) {}
+    rpc insertUrl (InsertUrlRequest) returns (StatusResponse) {}
+}
+
+message LoginRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    string status = 1;
+    string sessionId = 2;
+}
+
+message SessionId {
+    string sessionId = 1;
+}
+
+message StatusResponse {
+    string status = 1;
+}
+
+message SignUpRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message SessionDataResponse {
+    string status = 1;
+    string username = 2;
+}
+
+message FeedListRequest {
+    string sessionId = 1;
+    string url = 2;
+}
+
+message FeedListResponse {
+    repeated string feedList = 1;
+}
+
+message UrlListResponse {
+    repeated string urlList = 1;
+}
+
+message InsertUrlRequest {
+    string sessionId = 1;
+    string url = 2;
+}
