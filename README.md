@@ -1,1 +1,2 @@
-# Maalgm
+# Maalgm MongoDB implementation
+
