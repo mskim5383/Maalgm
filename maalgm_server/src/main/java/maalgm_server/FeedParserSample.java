@@ -1,6 +1,6 @@
-package maalgm;
+package maalgm_server;
 
-import maalgm.FeedParser;
+import maalgm_server.FeedParser;
 
 public class FeedParserSample {
   public static void main(String[] args) {

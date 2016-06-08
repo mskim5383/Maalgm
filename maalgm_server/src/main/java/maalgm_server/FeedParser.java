@@ -1,4 +1,4 @@
-package maalgm;
+package maalgm_server;
 
 import com.google.common.annotations.VisibleForTesting;
 
