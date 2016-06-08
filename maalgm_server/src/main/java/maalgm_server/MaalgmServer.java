@@ -1,4 +1,4 @@
-package kr.uwcj.cs492;
+package maalgm_server;
 
 import com.google.api.client.repackaged.com.google.common.annotations.VisibleForTesting;
 

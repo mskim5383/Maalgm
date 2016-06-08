@@ -1,4 +1,4 @@
-package kr.uwcj.cs492;
+package maalgm_server;
 
 import org.junit.After;
 import org.junit.Before;

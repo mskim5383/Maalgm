@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option java_package = "kr.uwcj.cs492";
+option java_package = "maalgm_server";
 
 service session {
     rpc login (LoginRequest) returns (LoginResponse) {}

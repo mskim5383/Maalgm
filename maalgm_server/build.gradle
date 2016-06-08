@@ -11,7 +11,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'com.google.protobuf:protobuf-gradle-plugin:0.7.4'
+    classpath 'com.google.protobuf:protobuf-gradle-plugin:0.7.6'
   }
 }
 
@@ -49,7 +49,7 @@ protobuf {
 }
 
 task GrpcServer (type: CreateStartScripts) {
-  mainClassName = "kr.uwcj.cs492.MaalgmServer"
+  mainClassName = "maalgm_server"
   applicationName = "grpc-server"
   outputDir = new File(project.buildDir, 'tmp')
   classpath = jar.outputs.files + project.configurations.runtime
