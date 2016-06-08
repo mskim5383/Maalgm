@@ -56,6 +56,10 @@ public class MDBLoginSimpleTest {
           new Document("username", "username001")).first().get("urllist"));
     ret = MDBLoginModule.insertURL("1","http://javacan.tistory.com/rss");
     System.out.println(ret.get("status"));
+    
+    iterable = ClientDB.getdb().getCollection("peruser").find(
+        new Document("username", "username001"));
+    System.out.println(iterable.first());
 
     ret = MDBLoginModule.getURLList("1");
     System.out.println(ret.get("urllist"));
@@ -65,7 +69,6 @@ public class MDBLoginSimpleTest {
 
     ret = MDBLoginModule.getSessionData("1");
     System.out.println(ret.get("username"));
-
 
     ret = MDBLoginModule.logout(ret.get("sessionID")+"");
 
