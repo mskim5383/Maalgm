@@ -131,7 +131,7 @@ public class MDBLoginModule {
           session_info.put("timestamp", String.valueOf(document.get("timestamp")));
         }
       });
-      if (((new Date()).getTime() - Long.parseLong(session_info.get("timestamp"))) < 60000){ 
+      if (((new Date()).getTime() - Long.parseLong(String.valueOf(session_info.get("timestamp")))) < 60000){ 
         ClientDB.getdb().getCollection("peruser").updateOne(
             new Document("username", String.valueOf(session_info.get("username"))),
             new Document("$push", new Document("urllist", URL)));

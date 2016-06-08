@@ -21,7 +21,7 @@ dependencies {
   testCompile 'junit:junit:4.12'
 }
 
-task MDBTest(type: CreateStartScripts) {
+task MDBLoginSimpleTest(type: CreateStartScripts) {
   mainClassName = "maalgm.MDBLoginSimpleTest"
   applicationName = "mdb-login-test"
   outputDir = new File(project.buildDir, 'tmp')

@@ -32,7 +32,7 @@ public class MDBLoginSimpleTest {
 
   public static void  main (String[] args) {
     JSONObject ret = new JSONObject();
-    ret = MDBModule.signUp("username001", "123123");
+    ret = MDBLoginModule.signUp("username001", "123123");
     FindIterable<Document> iterable = ClientDB.getdb().getCollection("peruser").find(
         new Document("username", "username001"));
     iterable.forEach(new Block<Document>() {
@@ -41,7 +41,7 @@ public class MDBLoginSimpleTest {
         System.out.println(document);
       }
     });
-    ret = MDBModule.login("username001", "123123");
+    ret = MDBLoginModule.login("username001", "123123");
     iterable = ClientDB.getdb().getCollection("sessiontable").find(
         new Document("username", "username001"));
     iterable.forEach(new Block<Document>() {
@@ -50,7 +50,7 @@ public class MDBLoginSimpleTest {
         System.out.println(document);
       }
     });
-    ret = MDBModule.logout(ret.get("sessionID")+"");
+    ret = MDBLoginModule.logout(ret.get("sessionID")+"");
 
     iterable = ClientDB.getdb().getCollection("sessiontable").find(
         new Document("username", "username001"));
