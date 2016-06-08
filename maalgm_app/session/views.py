@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from maalgm_app.settings import GRPC_IP, GRPC_PORT
 import session_client
 
@@ -11,7 +11,7 @@ def user_login(request):
         password = request.POST.get('password')
         result = session_client.login(username, password, GRPC_IP, GRPC_PORT)
 
-        if result.status == 200:
+        if result.status == '200':
             request.session['sessionId'] = result.sessionId
             return redirect(request.POST.get('next', '/'))
         else:
@@ -31,14 +31,13 @@ def user_logout(request):
 def register(request):
     if _is_logged_in(request):
         return redirect('/')
+    username = ''
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
         result = session_client.sign_up(username, password, GRPC_IP, GRPC_PORT)
-        if result.status == 200:
+        if result.status == '200':
             return login(username, password, GRPC_IP, GRPC_PORT)
-    else:
-        username = ''
     return render(request, 'session/register.html',
                     {'username': username})
 
@@ -46,6 +45,6 @@ def _is_logged_in(request):
     sessionId = request.session.get('sessionId', '')
     if sessionId:
         result = session_client.get_session_data(sessionId, GRPC_IP, GRPC_PORT)
-        if result.status == 200:
+        if result.status == '200':
             return request.username
     return ''
