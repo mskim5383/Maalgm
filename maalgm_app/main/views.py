@@ -32,6 +32,7 @@ def feed(request):
     else:
         return redirect('/')
     return render(request, 'main/feed_page.html', {'feed_list': feed_list,
+                                                   'username': _is_logged_in(request),
                                                    'error': error})
 
 def add_url(request):
@@ -49,4 +50,5 @@ def add_url(request):
     if result.status == '200':
         url_list = json.loads(result.urlList)
     return render(request, 'main/add_url.html', {'url_list': url_list,
+                                                 'username': _is_logged_in(request),
                                                  'error': error})
