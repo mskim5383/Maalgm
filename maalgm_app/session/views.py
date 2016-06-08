@@ -40,14 +40,12 @@ def register(request):
             result = session_client.login(username, password, GRPC_IP, GRPC_PORT)
             if result.status == '200':
                 request.session['sessionId'] = result.sessionId
-                print request.session['sessionId']
             return redirect('/')
     return render(request, 'session/register.html',
                     {'username': username})
 
 def _is_logged_in(request):
     sessionId = request.session.get('sessionId', '')
-    print sessionId
     if sessionId:
         result = session_client.get_session_data(sessionId, GRPC_IP, GRPC_PORT)
         if result.status == '200':
