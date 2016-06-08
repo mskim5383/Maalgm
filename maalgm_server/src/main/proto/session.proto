@@ -46,11 +46,11 @@ message FeedListRequest {
 }
 
 message FeedListResponse {
-    repeated string feedList = 1;
+    string feedList = 1;
 }
 
 message UrlListResponse {
-    repeated string urlList = 1;
+    string urlList = 1;
 }
 
 message InsertUrlRequest {
