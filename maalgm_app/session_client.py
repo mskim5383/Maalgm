@@ -54,7 +54,7 @@ def get_feed_list(sessionId, url, ip, port):
     response = stub.getFeedList(
         session_pb2.FeedListRequest(sessionId=sessionId, url=url),
         _TIMEOUT_SECONDS)
-    print("GET_FEED_LIST response : " + str(response.feedList))
+    print("GET_FEED_LIST response : " + response.feedList)
     return response
 
 
@@ -63,7 +63,7 @@ def get_url_list(sessionId, ip, port):
     response = stub.getUrlList(
         session_pb2.SessionId(sessionId=sessionId),
         _TIMEOUT_SECONDS)
-    print("GET_URL_LIST response : " + str(response.urlList))
+    print("GET_URL_LIST response : " + response.urlList)
     return response
 
 
@@ -77,10 +77,12 @@ def insert_url(sessionId, url, ip, port):
 
 
 if __name__ == '__main__':
+    """
     login("zoonoo", "password", "localhost", 21035)
     logout("sessionId", "localhost", 21035)
     sign_up("zoonoo", "password", "localhost", 21035)
     get_session_data("sessionId", "localhost", 21035)
+    """
     get_feed_list("sessionId", "url", "localhost", 21035)
     get_url_list("sessionId", "localhost", 21035)
-    insert_url("sessionId", "url", "localhost", 21035)
+    # insert_url("sessionId", "url", "localhost", 21035)
