@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class MaalgmServer {
 
-  private static final Logger logger = Logger.getLogger(GrpcServer.class.getName());
+  private static final Logger logger = Logger.getLogger("maalgm_server");
 
   private Server server;
   private static final int port = 21035;
