@@ -15,7 +15,6 @@ def login(username, password, ip, port):
     response = stub.login(
         session_pb2.LoginRequest(username=username, password=password),
         _TIMEOUT_SECONDS)
-          response.sessionId + ", status: " + response.status)
     return response
 
 
@@ -41,7 +40,6 @@ def get_session_data(sessionId, ip, port):
     response = stub.getSessionData(
         session_pb2.SessionId(sessionId=sessionId),
         _TIMEOUT_SECONDS)
-          + ", username: " + response.username)
     return response
 
 
