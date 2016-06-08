@@ -1,4 +1,4 @@
-package maalgm;
+package maalgm_server;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
