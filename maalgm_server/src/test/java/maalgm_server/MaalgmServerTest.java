@@ -8,10 +8,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.junit.runners.MethodSorters;
 
-import io.grpc.stub.StreamObserver;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(JUnit4.class)
@@ -27,7 +25,7 @@ public class MaalgmServerTest {
   }
 
   @Test
-  public void aLoginTest() {
+  public void allLoginTest() {
     Session.SignUpRequest request = Session.SignUpRequest.newBuilder()
         .setUsername("username").setPassword("12345").build();
     JSONObject dbResponse = MDBLoginModule.signUp(request.getUsername(), request.getPassword());
@@ -65,13 +63,13 @@ public class MaalgmServerTest {
   public void getDataTest() {
 
     Session.SignUpRequest request = Session.SignUpRequest.newBuilder()
-        .setUsername("username").setPassword("12345").build();
+        .setUsername("username2").setPassword("12345").build();
     JSONObject dbResponse = MDBLoginModule.signUp(request.getUsername(), request.getPassword());
     assertEquals("200", dbResponse.get("status").toString());
 
 
     Session.LoginRequest LoginRequest = Session.LoginRequest.newBuilder()
-        .setUsername("username").setPassword("12345").build();
+        .setUsername("username2").setPassword("12345").build();
     JSONObject LoginDBResponse = MDBLoginModule.login(LoginRequest.getUsername(), LoginRequest.getPassword());
     assertEquals("200", LoginDBResponse.get("status").toString());
     sessionId = LoginDBResponse.get("sessionID").toString();
@@ -79,16 +77,19 @@ public class MaalgmServerTest {
     //getSessionData
     JSONObject sessionDBResponse = MDBLoginModule.getSessionData(sessionId);
     assertEquals("200", sessionDBResponse.get("status").toString());
-    assertEquals("username", sessionDBResponse.get("username").toString());
-
-    //getFeedData
-
-    //getUrlList
+    assertEquals("username2", sessionDBResponse.get("username").toString());
 
     //insertUrl
+    JSONObject inserUrlDBResponse = MDBLoginModule.insertURL(sessionId, "http://www.daum.net");
+    assertEquals("200", sessionDBResponse.get("status").toString());
 
+    //getFeedList
+    JSONObject feedListDBResponse = MDBLoginModule.getFeedList(sessionId, "http://www.daum.net");
+    assertEquals("200", feedListDBResponse.get("status").toString());
+    assertTrue(feedListDBResponse.get("rssfeedlist").toString().length() != 0);
 
-
+    //getUrlList
+    JSONObject urlDBResponse = MDBLoginModule.getURLList(sessionId);
+    assertEquals("200", feedListDBResponse.get("status").toString());
   }
-
 }
