@@ -40,7 +40,7 @@ def register(request):
             result = session_client.login(username, password, GRPC_IP, GRPC_PORT)
             if result.status == '200':
                 request.session['sessionId'] = result.sessionId
-                print requeset.session['sessionId']
+                print request.session['sessionId']
             return redirect('/')
     return render(request, 'session/register.html',
                     {'username': username})
