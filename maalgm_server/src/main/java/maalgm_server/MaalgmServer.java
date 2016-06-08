@@ -2,6 +2,8 @@ package maalgm_server;
 
 import com.google.api.client.repackaged.com.google.common.annotations.VisibleForTesting;
 
+import org.json.simple.JSONObject;
+
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
@@ -59,12 +61,6 @@ public class MaalgmServer {
   @VisibleForTesting
   static class MaalgmLoginImpl implements sessionGrpc.session {
 
-    private String retrieveSessionId(String username, String password) {
-      //check the login info
-      //get a new session id from the DB
-      return "1";
-    }
-
     @Override
     public void login(Session.LoginRequest request,
                       StreamObserver<Session.LoginResponse> responseObserver) {
@@ -73,29 +69,41 @@ public class MaalgmServer {
       String password = request.getPassword();
       System.out.println("username : " + username + "\npassword : " + password);
 
-      Session.LoginResponse response = Session.LoginResponse.newBuilder()
-          .setStatus("200")
-          .setSessionId(
-              retrieveSessionId(username, password)
-          ).build();
+      JSONObject dbResponse = MDBLoginModule.login(username, password);
+
+      Session.LoginResponse.Builder resBuilder = Session.LoginResponse.newBuilder();
+      resBuilder.setStatus(dbResponse.get("status").toString());
+
+      if (dbResponse.get("status").toString().equals("200")) {
+        logger.info("status : 200. Successfully logged in. Username : " + username);
+        resBuilder.setSessionId(dbResponse.get("sessionID").toString());
+      }
+      else {
+        logger.info("status" + dbResponse.get("status").toString());
+      }
+      Session.LoginResponse response = resBuilder.build();
       responseObserver.onNext(response);
       responseObserver.onCompleted();
     }
 
     @Override
     public void logout(Session.SessionId request, StreamObserver<Session.StatusResponse> responseObserver) {
-      Session.StatusResponse response = Session.StatusResponse.newBuilder()
-          .setStatus("200")
-          .build();
+      System.out.println(request.getSessionId());
+      JSONObject dbResponse = MDBLoginModule.logout(request.getSessionId());
+      Session.StatusResponse.Builder resBuilder = Session.StatusResponse.newBuilder();
+      resBuilder.setStatus(dbResponse.get("status").toString());
+      Session.StatusResponse response = resBuilder.build();
       responseObserver.onNext(response);
       responseObserver.onCompleted();
     }
 
     @Override
     public void signUp(Session.SignUpRequest request, StreamObserver<Session.StatusResponse> responseObserver) {
-      Session.StatusResponse response = Session.StatusResponse.newBuilder()
-          .setStatus("200")
-          .build();
+      JSONObject dbResponse = MDBLoginModule.signUp(request.getUsername(), request.getPassword());
+      Session.StatusResponse.Builder resBuilder = Session.StatusResponse.newBuilder();
+      resBuilder.setStatus(
+          dbResponse.get("status").toString());
+      Session.StatusResponse response = resBuilder.build();
       responseObserver.onNext(response);
       responseObserver.onCompleted();
     }
@@ -144,8 +152,6 @@ public class MaalgmServer {
           .build();
       responseObserver.onNext(response);
       responseObserver.onCompleted();
-
     }
   }
-
 }
