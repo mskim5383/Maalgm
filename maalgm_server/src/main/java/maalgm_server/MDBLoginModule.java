@@ -7,7 +7,6 @@ import com.mongodb.Block;
 import com.mongodb.client.FindIterable;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Date;
@@ -23,6 +22,8 @@ import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Sorts.ascending;
@@ -144,18 +145,27 @@ public class MDBLoginModule {
               new Document("username", username)); 
           if(String.valueOf(iterable.first().get("urllist")).contains(URL)){
             ret.put("status", 403);
-          } else { 
-            ClientDB.getdb().getCollection("peruser").updateOne(
-                new Document("username", username),
-                new Document("$push", new Document("urllist", URL)));
-            
+          } else {
+            String feedJSONstr = FeedParser.getFeed(URL);
+            try{
+              JSONParser parser = new JSONParser();
+              JSONObject feedJSON = (JSONObject) parser.parse(feedJSONstr);
+
+              ClientDB.getdb().getCollection("peruser").updateOne(
+                  new Document("username", username),
+                  new Document("$push", new Document("urllist",
+                      new Document("URL", URL).append("RSSTitle", 
+                          String.valueOf(feedJSON.get("RSSTitle"))))));
+            } catch (ParseException e) {
+              e.printStackTrace();
+            }
             iterable = ClientDB.getdb().getCollection("perurl").find(
                 new Document("URL", URL));
-            if(iterable.first() == null){
+            if (iterable.first() == null){
               ClientDB.getdb().getCollection("perurl").insertOne(
                   new Document()
                       .append("URL", URL)
-                      .append("rssJSON", FeedParser.getFeed(URL))
+                      .append("rssJSON", feedJSONstr)
                       .append("related_urllist", asList())
                       .append("dirty_urllist", asList())
                       .append("timestamp", ((new Date()).getTime())));
@@ -252,7 +262,7 @@ public class MDBLoginModule {
               new Document("$set", new Document("timestamp", String.valueOf(newtimestamp))));
           iterable = ClientDB.getdb().getCollection("peruser").find(
               new Document("username", username));
-          if(!String.valueOf(iterable.first().get("urllist")).contains(URL)){
+          if (!String.valueOf(iterable.first().get("urllist")).contains(URL)){
             ret.put("status", 403);
           } else { 
             iterable = ClientDB.getdb().getCollection("perurl").find(
@@ -306,8 +316,6 @@ public class MDBLoginModule {
           ClientDB.getdb().getCollection("sessiontable").updateOne(
               new Document("sessionID", sessionid),
               new Document("$set", new Document("timestamp", String.valueOf(newtimestamp)))); 
-          iterable = ClientDB.getdb().getCollection("peruser").find(
-              new Document("username", username));
           ret.put("status", 200);
           ret.put("username", username);
         } else {
