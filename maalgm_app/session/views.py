@@ -37,16 +37,21 @@ def register(request):
         password = request.POST.get('password', '')
         result = session_client.sign_up(username, password, GRPC_IP, GRPC_PORT)
         if result.status == '200':
-            return login(username, password, GRPC_IP, GRPC_PORT)
+            result = session_client.login(username, password, GRPC_IP, GRPC_PORT)
+            if result.status == '200':
+                request.session['sessionId'] = result.sessionId
+                print requeset.session['sessionId']
+            return redirect('/')
     return render(request, 'session/register.html',
                     {'username': username})
 
 def _is_logged_in(request):
     sessionId = request.session.get('sessionId', '')
+    print sessionId
     if sessionId:
         result = session_client.get_session_data(sessionId, GRPC_IP, GRPC_PORT)
         if result.status == '200':
-            return request.username
+            return result.username
         else:
             request.session['sessionId'] = ''
     return ''

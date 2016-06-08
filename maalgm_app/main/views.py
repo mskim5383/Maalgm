@@ -16,6 +16,7 @@ def main_page(request):
         if result.status == '200':
             url_list = json.loads(result.urlList)
     return render(request, 'main/main_page.html', {'url_list': url_list,
+                                                   'username': _is_logged_in(request),
                                                    'dark_theme': dark_theme})
 
 def feed(request):
