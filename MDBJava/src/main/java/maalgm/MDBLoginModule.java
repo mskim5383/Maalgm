@@ -118,23 +118,6 @@ public class MDBLoginModule {
     return ret;
   }
 
-  public static String sessionTimeCheck (String sessionid) {
-    JSONObject ret = new JSONObject();
-    try {
-      FindIterable <Document> iterable = ClientDB.getdb().getCollection("sessiontable").find(
-          new Document("sessionID", sessionid));
-      iterable.forEach(new Block<Document>() {
-        @Override
-        public void apply(final Document document) {
-          ret.put("ret", document.get("username") + "");
-        }
-      });
-    } catch (Exception e) {
-      ret.put("ret", "");
-    }
-    return ret.get("ret") + "";
-  }
-
   public static JSONObject insertURL (String sessionid, String URL) {
     JSONObject ret = new JSONObject();
     JSONObject session_info = new JSONObject();
@@ -144,13 +127,13 @@ public class MDBLoginModule {
       iterable.forEach(new Block<Document>() {
         @Override
         public void apply(final Document document) {
-          session_info.put("username", document.get("username")+"");
-          session_info.put("timestamp", document.get("timestamp")+"");
+          session_info.put("username", String.valueOf(document.get("username")));
+          session_info.put("timestamp", String.valueOf(document.get("timestamp")));
         }
       });
-      if (((new Date()).getTime() - Long.parseLong(session_info.get("timestamp")))<60000){ 
+      if (((new Date()).getTime() - Long.parseLong(session_info.get("timestamp"))) < 60000){ 
         ClientDB.getdb().getCollection("peruser").updateOne(
-            new Document("username", session_info.get("username")+""),
+            new Document("username", String.valueOf(session_info.get("username"))),
             new Document("$push", new Document("urllist", URL)));
         ret.put("status", 200);
       } else {

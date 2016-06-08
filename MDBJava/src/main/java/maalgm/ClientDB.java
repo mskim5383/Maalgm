@@ -25,6 +25,6 @@ public class ClientDB {
 
   public static String getsessionid() {
     sessionid = sessionid + 1;
-    return sessionid+"";
+    return String.valueOf(sessionid);
   }
 }

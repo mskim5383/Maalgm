@@ -61,8 +61,9 @@ public class MDBLoginSimpleTest {
       }
     });
 
-    if(iterable.first() == null)
-      System.out.println("HELL YEAH");
+    if(iterable.first() == null){
+      System.out.println("user logout succeed");
+    }
   }
 
 }
