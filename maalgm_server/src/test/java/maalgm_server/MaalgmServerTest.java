@@ -27,16 +27,16 @@ public class MaalgmServerTest {
   }
 
   @Test
-  public void LoginTest() {
+  public void aLoginTest() {
     Session.SignUpRequest request = Session.SignUpRequest.newBuilder()
         .setUsername("username").setPassword("12345").build();
     JSONObject dbResponse = MDBLoginModule.signUp(request.getUsername(), request.getPassword());
     assertEquals("200", dbResponse.get("status").toString());
 
-    Session.LoginRequest LoginRequest = Session.LoginRequest.newBuilder()
-        .setUsername("username").setPassword("54321").build();
 
     //Wrong Password Login
+    Session.LoginRequest LoginRequest = Session.LoginRequest.newBuilder()
+        .setUsername("username").setPassword("54321").build();
     dbResponse = MDBLoginModule
         .login(LoginRequest.getUsername(), LoginRequest.getPassword());
     assertEquals("404", dbResponse.get("status").toString());
@@ -45,7 +45,6 @@ public class MaalgmServerTest {
     //Valid Login Test
     LoginRequest = Session.LoginRequest.newBuilder()
         .setUsername("username").setPassword("12345").build();
-
     dbResponse = MDBLoginModule
         .login(LoginRequest.getUsername(), LoginRequest.getPassword());
     assertEquals("200", dbResponse.get("status").toString());
@@ -60,4 +59,36 @@ public class MaalgmServerTest {
     dbResponse = MDBLoginModule.logout(LogOutrequest.getSessionId());
     assertEquals("200", dbResponse.get("status").toString());
   }
+
+
+  @Test
+  public void getDataTest() {
+
+    Session.SignUpRequest request = Session.SignUpRequest.newBuilder()
+        .setUsername("username").setPassword("12345").build();
+    JSONObject dbResponse = MDBLoginModule.signUp(request.getUsername(), request.getPassword());
+    assertEquals("200", dbResponse.get("status").toString());
+
+
+    Session.LoginRequest LoginRequest = Session.LoginRequest.newBuilder()
+        .setUsername("username").setPassword("12345").build();
+    JSONObject LoginDBResponse = MDBLoginModule.login(LoginRequest.getUsername(), LoginRequest.getPassword());
+    assertEquals("200", LoginDBResponse.get("status").toString());
+    sessionId = LoginDBResponse.get("sessionID").toString();
+
+    //getSessionData
+    JSONObject sessionDBResponse = MDBLoginModule.getSessionData(sessionId);
+    assertEquals("200", sessionDBResponse.get("status").toString());
+    assertEquals("username", sessionDBResponse.get("username").toString());
+
+    //getFeedData
+
+    //getUrlList
+
+    //insertUrl
+
+
+
+  }
+
 }
