@@ -1,9 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-<div id="error">
-  {{ error }}
+<div class="container" style="height:50px;">
 </div>
-<div id="feed_list">
-  {{ feed_list }}
+<div>
+    <div>
+    	<h2 style="margin-bottom:40px;"> RSS Feeds for : {{ feed_list.RSSTitle }} </h2>
+    	<h4> {{ feed_list.feedList|length }} feeds available now.</h4>
+    </div>
+    {% for feed in feed_list.feedList %}
+    <hr>
+    </hr>
+    <div>
+	    <h3 class = "repo-list-name" style="display:inline-block; margin-top:0px;"><a href="{{ feed.feedLink }}"> {{ feed.feedTitle }} </a></h3>
+	    <div class="repo-list-stats" style="display:inline-block; float:right;">
+	    	<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            <span> 3 </span>
+	    </div>
+	    <div style="margin-top:30px;"> {{ feed.feedDescription|safe }} </div>
+        <p style="margin-top:15px; color:#888;"> Updated on <time class="timeago" datetime="{{ feed_list.RSSPubDate|date:"c" }}"></time></p>
+    </div>
+    {% endfor %}
 </div>
 {% endblock %}

@@ -1,20 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
 
+{% if username %}
+
+{% else %}
 <header id="top" class="header0">
     <div class="text-vertical-center">
-            <h1> MAALGM </h1>
-            {% if username %}
-            {{ username }}
-            <a href="/session/logout/" class="btn btn-dark btn-lg">logout</a>
-            {% else %}
+            <h1 style="margin-top:180px;"class="pinkpink"> MAALGM </h1>
+            <h3> <h3>
             <a href="/session/login/" class="btn btn-dark btn-lg">Start Maalgm</a>
-            {% endif %}
     </div>
 </header>
+{% endif %}
+
 {% endblock %}
 {% block css %}
-<link href="/media/css/stylish-portfolio.css" rel="stylesheet">
+<link href="/media/css/stylish_portfolio.css" rel="stylesheet">
+<link rel="stylesheet" href="/media/css/search.css">
 <style>
 .container{
   width:1000px;

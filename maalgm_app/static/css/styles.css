@@ -1,0 +1,236 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:700);
+
+
+.dark-theme {
+  background-color:#000;
+}
+.white-theme{
+  background-color:#fff;
+}
+.dark-theme #footer{
+  background-color:#000;
+}
+.white-theme #footer{
+  background-color:#fff;
+}
+
+.row{
+  margin-right:0;
+  margin-left:0;
+}
+
+.mainrow{
+  margin-right:0;
+  margin-left:0;
+  padding-left:0;
+  padding-right:0;
+  min-height: 80%;
+}
+
+.usernameok h4{
+  font-family: 'Open Sans';
+  color:#ff00ff;
+}
+
+#s {
+    font-family: 'Open Sans', sans-serif;
+    font-weight:700;
+    font-size:14px;
+    margin-top:10px;
+    display: block;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 12px 12px 12px 12px;
+  
+    -webkit-border-radius: 200px;
+    -moz-border-radius: 200px;
+    border-radius: 200px;
+  
+    width: 130px;
+    height: 16px;
+    color: #000;
+    
+  
+    position: relative;
+    z-index: 2;
+    background: #fff 
+}
+
+#s::-webkit-input-placeholder, #s:-moz-placeholder {
+    color: #000;
+}
+
+
+#cssmenu {
+  width: auto;
+  vertical-align:middle;
+  background-color:#000;
+}
+#cssmenu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  display: block;
+  zoom: 1;
+}
+#cssmenu ul:after {
+  content: " ";
+  display: block;
+  font-size: 0;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+#cssmenu ul li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+#cssmenu.align-right ul li {
+  float: right;
+}
+#cssmenu.align-center ul {
+  text-align: center;
+}
+#cssmenu .NTnavBar {
+  color: #ffffff;
+  text-decoration: none;
+  display: block;
+  padding: 15px 25px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 14px;
+  position: relative;
+  -webkit-transition: color .25s;
+  -moz-transition: color .25s;
+  -ms-transition: color .25s;
+  -o-transition: color .25s;
+  transition: color .25s;
+}
+#cssmenu ul li a:hover {
+  color: #333333;
+}
+#cssmenu ul li a:hover:before {
+  width: 100%;
+}
+#cssmenu ul li a:after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: -3px;
+  top: 19px;
+  height: 6px;
+  width: 6px;
+  background: #ffffff;
+  opacity: .5;
+}
+#cssmenu ul li a:before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 0;
+  background: #333333;
+  -webkit-transition: width .25s;
+  -moz-transition: width .25s;
+  -ms-transition: width .25s;
+  -o-transition: width .25s;
+  transition: width .25s;
+}
+#cssmenu ul li.last > a:after,
+#cssmenu ul li:last-child > a:after {
+  display: none;
+}
+#cssmenu ul li.active a {
+  color: #333333;
+}
+#cssmenu ul li.active a:before {
+  width: 100%;
+}
+#cssmenu.align-right li.last > a:after,
+#cssmenu.align-right li:last-child > a:after {
+  display: block;
+}
+#cssmenu.align-right li:first-child a:after {
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  #cssmenu ul li {
+    float: none;
+    display: block;
+  }
+  #cssmenu ul li a {
+    width: 100%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-bottom: 1px solid #fb998c;
+  }
+  #cssmenu ul li.last > a,
+  #cssmenu ul li:last-child > a {
+    border: 0;
+  }
+  #cssmenu ul li a:after {
+    display: none;
+  }
+  #cssmenu ul li a:before {
+    display: none;
+  }
+}
+
+
+#footer{
+  padding:25px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+footer{
+  padding:25px 0;
+  text-align:center
+  position: absolute;
+}
+footer span.copyright{
+  line-height:40px;
+  font-family:'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform:uppercase;
+}
+footer ul.quicklinks{
+  margin-bottom:0;
+  line-height:40px;
+  font-family:'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform:uppercase;
+}
+ul.social-buttons{
+  margin-bottom:0
+}
+ul.social-buttons li a{
+  display:block;background-color:#222;
+  height:40px;
+  width:40px;
+  border-radius:100%;
+  font-size:20px;
+  line-height:40px;
+  color:#fff;
+  outline:0;
+  -webkit-transition:all .3s;
+  -moz-transition:all .3s;
+  transition:all .3s
+}
+ul.social-buttons li a:hover,ul.social-buttons li a:focus,ul.social-buttons li a:active{
+  background-color:#fed136
+}
+
+hr {
+  border-top:1px solid #9C9C9C;
+  border-bottom:1px solid #F6F6F6;
+}
