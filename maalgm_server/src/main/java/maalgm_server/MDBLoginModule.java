@@ -72,7 +72,7 @@ public class MDBLoginModule {
     JSONObject ret = new JSONObject();
     try {
       FindIterable <Document> iterable = ClientDB.getdb().getCollection("peruser").find(
-          new Document("username", username));
+          new Document("username", username).append("passwd", passwd));
       if (iterable.first() != null) {
         String sid = ClientDB.getsessionid();
         ClientDB.getdb().getCollection("sessiontable").insertOne(
@@ -82,7 +82,6 @@ public class MDBLoginModule {
                 .append("timestamp", ((new Date()).getTime())));
         ret.put("status", 200);
         ret.put("sessionID", sid);
-
       } else {
         ret.put("status", 404);
       }
@@ -118,26 +117,204 @@ public class MDBLoginModule {
     return ret;
   }
 
+  /*
+   * whenever user adds a new rss URL, the request is handled by insertURL.
+   * result: {"status": code}
+   *
+   * status code
+   * 200 : succeed
+   * 403 : already added URL
+   * 404 : no session table found with given sessionid, or session time passed.
+   * 500 : server error occurred
+   */
   public static JSONObject insertURL (String sessionid, String URL) {
     JSONObject ret = new JSONObject();
-    JSONObject session_info = new JSONObject();
     try {
       FindIterable <Document> iterable = ClientDB.getdb().getCollection("sessiontable").find(
           new Document("sessionID", sessionid));
-      iterable.forEach(new Block<Document>() {
-        @Override
-        public void apply(final Document document) {
-          session_info.put("username", String.valueOf(document.get("username")));
-          session_info.put("timestamp", String.valueOf(document.get("timestamp")));
+      if (iterable.first() != null){
+        String username = String.valueOf(iterable.first().get("username"));
+        String timestamp = String.valueOf(iterable.first().get("timestamp"));
+        Long newtimestamp = (new Date()).getTime();
+        if ((newtimestamp - Long.parseLong(timestamp)) < 60000){
+          ClientDB.getdb().getCollection("sessiontable").updateOne(
+              new Document("sessionID", sessionid),
+              new Document("$set", new Document("timestamp", String.valueOf(newtimestamp))));
+          iterable = ClientDB.getdb().getCollection("peruser").find(
+              new Document("username", username)); 
+          if(String.valueOf(iterable.first().get("urllist")).contains(URL)){
+            ret.put("status", 403);
+          } else { 
+            ClientDB.getdb().getCollection("peruser").updateOne(
+                new Document("username", username),
+                new Document("$push", new Document("urllist", URL)));
+            
+            iterable = ClientDB.getdb().getCollection("perurl").find(
+                new Document("URL", URL));
+            if(iterable.first() == null){
+              ClientDB.getdb().getCollection("perurl").insertOne(
+                  new Document()
+                      .append("URL", URL)
+                      .append("rssJSON", FeedParser.getFeed(URL))
+                      .append("related_urllist", asList())
+                      .append("dirty_urllist", asList())
+                      .append("timestamp", ((new Date()).getTime())));
+            } else {
+              iterable = ClientDB.getdb().getCollection("perurl").find(
+                  new Document("URL", URL));
+              timestamp = String.valueOf(iterable.first().get("timestamp")); 
+              newtimestamp = (new Date()).getTime();           
+              if ((newtimestamp - Long.parseLong(timestamp)) >= 60000){
+                ClientDB.getdb().getCollection("perurl").updateOne(
+                    new Document("URL", URL),
+                    new Document("$set",
+                        new Document("rssJSON", FeedParser.getFeed(URL))
+                            .append("timestamp", String.valueOf(newtimestamp))));
+              }
+            }
+            ret.put("status", 200);
+          }
+        } else {
+          logout(sessionid);
+          ret.put("status", 404);
         }
-      });
-      if (((new Date()).getTime() - Long.parseLong(String.valueOf(session_info.get("timestamp")))) < 60000){ 
-        ClientDB.getdb().getCollection("peruser").updateOne(
-            new Document("username", String.valueOf(session_info.get("username"))),
-            new Document("$push", new Document("urllist", URL)));
-        ret.put("status", 200);
       } else {
-        logout(sessionid);
+        ret.put("status", 404);
+      }
+    } catch (Exception e) {
+      ret.put("status", 500);
+    }
+    return ret;
+  }
+
+  /*
+   * returns a logined user's URL list.
+   * result: {"status": code, "urllist": user's url list}
+   *
+   * status code
+   * 200 : succeed
+   * 404 : no session table found with given sessionid, or session time passed
+   * 500 : server error occurred
+   */
+  public static JSONObject getURLList (String sessionid) {
+    JSONObject ret = new JSONObject();
+    try {
+      FindIterable <Document> iterable = ClientDB.getdb().getCollection("sessiontable").find(
+          new Document("sessionID", sessionid));
+      if (iterable.first() != null) {
+        String username = String.valueOf(iterable.first().get("username"));
+        String timestamp = String.valueOf(iterable.first().get("timestamp"));
+        Long newtimestamp = (new Date()).getTime();
+        if ((newtimestamp - Long.parseLong(timestamp)) < 60000){
+          ClientDB.getdb().getCollection("sessiontable").updateOne(
+              new Document("sessionID", sessionid),
+              new Document("$set", new Document("timestamp", String.valueOf(newtimestamp))));
+             
+          iterable = ClientDB.getdb().getCollection("peruser").find(
+              new Document("username", username));
+          ret.put("status", 200);
+          ret.put("urllist", iterable.first().get("urllist"));
+        } else {
+          logout(sessionid);
+          ret.put("status", 404);
+        }
+      } else {
+        ret.put("status", 404);
+      }
+    } catch (Exception e) {
+      ret.put("status", 500);
+    }
+    return ret;
+  }
+
+  /*
+   * get the rss feed data of the given URL
+   * result: {"status": code, "rssfeedlist", rssfeedlist}
+   *
+   * status code
+   * 200 : succeed
+   * 403 : user does not have given URL in the urllist
+   * 404 : no session table found with given sessionid, or session time passed
+   * 500 : server error occurred
+   */
+  public static JSONObject getFeedList (String sessionid, String URL) { 
+    JSONObject ret = new JSONObject();
+    try {
+      FindIterable <Document> iterable = ClientDB.getdb().getCollection("sessiontable").find(
+          new Document("sessionID", sessionid));
+      if (iterable.first() != null) {
+        String username = String.valueOf(iterable.first().get("username"));
+        String timestamp = String.valueOf(iterable.first().get("timestamp")); 
+        Long newtimestamp = (new Date()).getTime();
+        if ((newtimestamp - Long.parseLong(timestamp)) < 60000){
+          ClientDB.getdb().getCollection("sessiontable").updateOne(
+              new Document("sessionID", sessionid),
+              new Document("$set", new Document("timestamp", String.valueOf(newtimestamp))));
+          iterable = ClientDB.getdb().getCollection("peruser").find(
+              new Document("username", username));
+          if(!String.valueOf(iterable.first().get("urllist")).contains(URL)){
+            ret.put("status", 403);
+          } else { 
+            iterable = ClientDB.getdb().getCollection("perurl").find(
+                new Document("URL", URL));
+            timestamp = String.valueOf(iterable.first().get("timestamp"));
+            newtimestamp = (new Date()).getTime();           
+            if ((newtimestamp - Long.parseLong(timestamp)) >= 60000){
+              ClientDB.getdb().getCollection("perurl").updateOne(
+                  new Document("URL", URL),
+                  new Document("$set", 
+                      new Document("rssJSON", FeedParser.getFeed(URL))
+                          .append("timestamp", String.valueOf(newtimestamp))));
+            }
+            String retfeedlist = String.valueOf(ClientDB.getdb().getCollection("perurl").find(
+                new Document("URL", URL)).first().get("rssJSON"));
+            ret.put("status", 200);
+            ret.put("rssfeedlist", retfeedlist);
+          }
+        } else {
+          logout(sessionid);
+          ret.put("status", 404);
+        }
+      } else {
+        ret.put("status", 404);
+      }
+    } catch (Exception e) {
+      ret.put("status", 500);
+    }
+    return ret;
+  }
+  
+  /*
+   * returns the session data of the logined user
+   * result: {"status": code, "username": username}
+   *
+   * status code
+   * 200 : succeed
+   * 404 : no session table found with given sessionid, or session time passed
+   * 500 : server error occurred
+   */
+  public static JSONObject getSessionData (String sessionid) { 
+    JSONObject ret = new JSONObject();
+    try {
+      FindIterable <Document> iterable = ClientDB.getdb().getCollection("sessiontable").find(
+          new Document("sessionID", sessionid));
+      if (iterable.first() != null) {
+        String username = String.valueOf(iterable.first().get("username"));
+        String timestamp = String.valueOf(iterable.first().get("timestamp"));
+        Long newtimestamp = (new Date()).getTime();
+        if ((newtimestamp - Long.parseLong(timestamp)) < 60000){
+          ClientDB.getdb().getCollection("sessiontable").updateOne(
+              new Document("sessionID", sessionid),
+              new Document("$set", new Document("timestamp", String.valueOf(newtimestamp)))); 
+          iterable = ClientDB.getdb().getCollection("peruser").find(
+              new Document("username", username));
+          ret.put("status", 200);
+          ret.put("username", username);
+        } else {
+          logout(sessionid);
+          ret.put("status", 404);
+        }
+      } else {
         ret.put("status", 404);
       }
     } catch (Exception e) {
