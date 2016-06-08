@@ -50,6 +50,23 @@ public class MDBLoginSimpleTest {
         System.out.println(document);
       }
     });
+
+    ret = MDBLoginModule.insertURL("1","http://javacan.tistory.com/rss");
+    System.out.println(ClientDB.getdb().getCollection("peruser").find(
+          new Document("username", "username001")).first().get("urllist"));
+    ret = MDBLoginModule.insertURL("1","http://javacan.tistory.com/rss");
+    System.out.println(ret.get("status"));
+
+    ret = MDBLoginModule.getURLList("1");
+    System.out.println(ret.get("urllist"));
+
+    ret = MDBLoginModule.getFeedList("1","http://javacan.tistory.com/rss");
+    System.out.println(ret.get("rssfeedlist"));
+
+    ret = MDBLoginModule.getSessionData("1");
+    System.out.println(ret.get("username"));
+
+
     ret = MDBLoginModule.logout(ret.get("sessionID")+"");
 
     iterable = ClientDB.getdb().getCollection("sessiontable").find(
