@@ -150,12 +150,9 @@ public class MDBLoginModule {
             try{
               JSONParser parser = new JSONParser();
               JSONObject feedJSON = (JSONObject) parser.parse(feedJSONstr);
-
               ClientDB.getdb().getCollection("peruser").updateOne(
                   new Document("username", username),
-                  new Document("$push", new Document("urllist",
-                      new Document("URL", URL).append("RSSTitle", 
-                          String.valueOf(feedJSON.get("RSSTitle"))))));
+                  new Document("$push", new Document("urllist", "{\"URL\":\""+URL+"\",\"RSSTitle\":\""+String.valueOf(feedJSON.get("RSSTitle"))+"\"}")));
             } catch (ParseException e) {
               e.printStackTrace();
             }
