@@ -9,10 +9,10 @@ def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        sessionId = session_client.login(username, password, GRPC_IP, GRPC_PORT)
+        result = session_client.login(username, password, GRPC_IP, GRPC_PORT)
 
-        if sessionId:
-            request.session['sessionId'] = sessionId
+        if result.status == 200:
+            request.session['sessionId'] = result.sessionId
             return redirect(request.POST.get('next', '/'))
         else:
             return render(request, 'session/login.html',
@@ -34,10 +34,9 @@ def register(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        status = session_client(username, password, GRPC_IP, GRPC_PORT)
-        if status == 200:
-            login(username, password, GRPC_IP, GRPC_PORT)
-            return redirect('/')
+        result = session_client.sign_up(username, password, GRPC_IP, GRPC_PORT)
+        if result.status == 200:
+            return login(username, password, GRPC_IP, GRPC_PORT)
     else:
         username = ''
     return render(request, 'session/register.html',
@@ -46,6 +45,7 @@ def register(request):
 def _is_logged_in(request):
     sessionId = request.session.get('sessionId', '')
     if sessionId:
-        username = session_client.get_session_data(sessionId, GRPC_IP, GRPC_PORT)
-        return username
+        result = session_client.get_session_data(sessionId, GRPC_IP, GRPC_PORT)
+        if result.status == 200:
+            return request.username
     return ''
