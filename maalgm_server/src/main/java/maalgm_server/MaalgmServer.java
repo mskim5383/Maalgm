@@ -159,7 +159,7 @@ public class MaalgmServer {
     @Override
     public void insertUrl(Session.InsertUrlRequest request, StreamObserver<Session.StatusResponse> responseObserver) {
 
-      JSONObject dbResponse = MDBLoginModule.signUp(request.getSessionId(), request.getUrl());
+      JSONObject dbResponse = MDBLoginModule.insertURL(request.getSessionId(), request.getUrl());
       Session.StatusResponse.Builder resBuilder = Session.StatusResponse.newBuilder();
       resBuilder.setStatus(
           dbResponse.get("status").toString());
