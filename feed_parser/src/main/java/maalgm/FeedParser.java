@@ -49,6 +49,7 @@ public class FeedParser {
         }
       }
       ret.put("feedList", feedList);
+      ret.put("categoryList", categoryList);
       ret.put("result", "success");
     } catch (Exception e) {
       ret.put("result", "error");
