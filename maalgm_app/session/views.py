@@ -47,4 +47,6 @@ def _is_logged_in(request):
         result = session_client.get_session_data(sessionId, GRPC_IP, GRPC_PORT)
         if result.status == '200':
             return request.username
+        else:
+            request.session['sessionId'] = ''
     return ''
