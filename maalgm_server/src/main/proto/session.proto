@@ -41,19 +41,21 @@ message SessionDataResponse {
 }
 
 message FeedListRequest {
-    string sessionId = 1;
-    string url = 2;
+    string sessionId = 2;
+    string url = 3;
 }
 
 message FeedListResponse {
-    string feedList = 1;
+    string status = 1;
+    string feedList = 2;
 }
 
 message UrlListResponse {
-    string urlList = 1;
+    string status = 1;
+    string urlList = 2;
 }
 
 message InsertUrlRequest {
-    string sessionId = 1;
-    string url = 2;
+    string sessionId = 2;
+    string url = 3;
 }

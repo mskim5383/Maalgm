@@ -113,11 +113,16 @@ public class MaalgmServer {
 
     @Override
     public void getSessionData(Session.SessionId request, StreamObserver<Session.SessionDataResponse> responseObserver) {
-      System.out.println("getUsername Request called.");
-      Session.SessionDataResponse response = Session.SessionDataResponse.newBuilder()
-          .setUsername(
-             "this is the dummy username response"
-          ).build();
+      JSONObject dbResponse = MDBLoginModule.getSessionData(request.getSessionId());
+      Session.SessionDataResponse.Builder resBuilder = Session.SessionDataResponse.newBuilder();
+      resBuilder.setStatus(
+          dbResponse.get("status").toString());
+      if (resBuilder.getStatus().equals("200")) {
+        resBuilder.setUsername(
+            dbResponse.get("username").toString()
+        );
+      }
+      Session.SessionDataResponse response = resBuilder.build();
       responseObserver.onNext(response);
       responseObserver.onCompleted();
     }
@@ -125,16 +130,13 @@ public class MaalgmServer {
     @Override
     public void getFeedList(Session.FeedListRequest request, StreamObserver<Session.FeedListResponse> responseObserver) {
       System.out.println("getFeedList Request called.");
-
-      List<String> arrayFeedList = new ArrayList<String>();
-      arrayFeedList.add("http://www.bbc.co.uk");
-      arrayFeedList.add("http://www.nytimes.com");
-      arrayFeedList.add("http://www.startupweekly.com");
-      arrayFeedList.add("http://www.google.com");
-      String jsonFeedList = JSONArray.toJSONString(arrayFeedList);
+      JSONObject dbResponse = MDBLoginModule.getFeedList(request.getSessionId(), request.getUrl());
 
       Session.FeedListResponse.Builder resBuilder = Session.FeedListResponse.newBuilder();
-      resBuilder.setFeedList(jsonFeedList.toString());
+      resBuilder.setStatus(dbResponse.get("status").toString());
+      if (dbResponse.get("status").toString().equals("200")) {
+        resBuilder.setFeedList(dbResponse.get("rssfeedlist").toString());
+      }
       Session.FeedListResponse response = resBuilder.build();
       responseObserver.onNext(response);
       responseObserver.onCompleted();
@@ -142,16 +144,13 @@ public class MaalgmServer {
 
     @Override
     public void getUrlList(Session.SessionId request, StreamObserver<Session.UrlListResponse> responseObserver) {
-
-      List<String> arrayUrlList = new ArrayList<String>();
-      arrayUrlList.add("http://www.bbc.co.uk");
-      arrayUrlList.add("http://www.nytimes.com");
-      arrayUrlList.add("http://www.startupweekly.com");
-      arrayUrlList.add("http://www.google.com");
-      String jsonUrlList = JSONArray.toJSONString(arrayUrlList);
+      JSONObject dbResponse = MDBLoginModule.getURLList(request.getSessionId());
 
       Session.UrlListResponse.Builder resBuilder = Session.UrlListResponse.newBuilder();
-      resBuilder.setUrlList(jsonUrlList);
+      resBuilder.setStatus(dbResponse.get("status").toString());
+      if (dbResponse.get("status").toString().equals("200")) {
+        resBuilder.setUrlList(dbResponse.get("urllist").toString());
+      }
       Session.UrlListResponse response = resBuilder.build();
       responseObserver.onNext(response);
       responseObserver.onCompleted();
@@ -159,11 +158,15 @@ public class MaalgmServer {
 
     @Override
     public void insertUrl(Session.InsertUrlRequest request, StreamObserver<Session.StatusResponse> responseObserver) {
-      Session.StatusResponse response = Session.StatusResponse.newBuilder()
-          .setStatus("200")
-          .build();
+
+      JSONObject dbResponse = MDBLoginModule.signUp(request.getSessionId(), request.getUrl());
+      Session.StatusResponse.Builder resBuilder = Session.StatusResponse.newBuilder();
+      resBuilder.setStatus(
+          dbResponse.get("status").toString());
+      Session.StatusResponse response = resBuilder.build();
       responseObserver.onNext(response);
       responseObserver.onCompleted();
+
     }
   }
 }
