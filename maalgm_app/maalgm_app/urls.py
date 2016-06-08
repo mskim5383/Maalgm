@@ -16,9 +16,15 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from maalgm_app.settings import BASE_DIR
+import os
+
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^session/', include('session.urls')),
+    # Media Root
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
+        {'document_root': os.path.join(BASE_DIR, 'static')}),
     url(r'^', include('main.urls')),
 
 ]
