@@ -1,0 +1,162 @@
+/*!
+ * Start Bootstrap - Stylish Portfolio Bootstrap Theme (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+/* Global Styles */
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.urllist {
+    background-color:#fff;
+}
+.urllistelem {
+    text-align: left;
+}
+.urllistelem a{
+    font-family:'Open Sans';
+    color:#999;
+}
+
+.text-vertical-center {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.text-vertical-center h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 4.5em;
+    font-weight: 700;
+}
+
+/* Custom Button Styles */
+
+.btn-dark {
+    border-radius: 0;
+    color: #fff;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.btn-dark:hover,
+.btn-dark:focus,
+.btn-dark:active {
+    color: #fff;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.btn-light {
+    border-radius: 0;
+    color: #333;
+    background-color: rgb(255,255,255);
+}
+
+.btn-light:hover,
+.btn-light:focus,
+.btn-light:active {
+    color: #333;
+    background-color: rgba(255,255,255,0.8);
+}
+
+/* Custom Horizontal Rule */
+
+hr.small {
+    max-width: 100px;
+}
+.loginheader{
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+}
+/* Header when !user.is_authenticated */
+.header0 {
+    display:table;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    color:#fff;
+    background:url(../img/bg_3.jpg) no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.header-text {
+    margin-top:20vw;
+}
+.header0 h1 {
+    font-size:4.0vw;
+}
+
+.pinkpink {
+    color:#FF00FF;
+}
+
+.header0 h3 {
+    font-family: 'PT Sans + PT Serif';
+    font-size:1.5vw;
+}
+
+.header0 a {
+    font-family: sans-serif;
+}
+
+/* Header */
+
+.header {
+    color:#fff;
+    background-image: url(../img/login_bg.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.ogeul{
+    text-align:center;
+    width:70%;
+    padding-top:2px;
+    padding-bottom:5px;
+    margin:auto;
+    margin-top:300px;
+    margin-bottom:300px;
+    background-color:#000;
+    opacity:.55;
+}
+.ogeul h1{
+    font-size:2.5em;
+    font-weight:bold;
+    text-transform:uppercase;
+}
+
+/* About */
+
+.about {
+    padding: 50px 0;
+}
+
+/* Services */
+
+.services {
+    padding: 50px 0;
+}
+
+.service-item {
+    margin-bottom: 30px;
+}
+
+/* blank */
+.blank {
+    padding: 50px 0;
+}
