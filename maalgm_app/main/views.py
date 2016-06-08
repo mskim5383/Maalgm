@@ -14,6 +14,6 @@ def main_page(request):
     if _is_logged_in(request):
         url_json = get_url_list(request.session.get('sessionId'), GRPC_IP, GRPC_PORT)
         if url_json:
-            url_list = jsom.loads(url_json)
+            url_list = json.loads(url_json)
     return render(request, 'main/main_page.html', {'url_list': url_list,
                                                    'dark_theme': dark_theme})
