@@ -135,7 +135,11 @@ public class MaalgmServer {
       Session.FeedListResponse.Builder resBuilder = Session.FeedListResponse.newBuilder();
       resBuilder.setStatus(dbResponse.get("status").toString());
       if (dbResponse.get("status").toString().equals("200")) {
-        resBuilder.setFeedList(dbResponse.get("rssfeedlist").toString());
+        try {
+          resBuilder.setFeedList(dbResponse.get("rssfeedlist").toString());
+        } catch (NullPointerException e) {
+          resBuilder.setFeedList("Null Pointer Exception");
+        }
       }
       Session.FeedListResponse response = resBuilder.build();
       responseObserver.onNext(response);
@@ -149,9 +153,13 @@ public class MaalgmServer {
       Session.UrlListResponse.Builder resBuilder = Session.UrlListResponse.newBuilder();
       resBuilder.setStatus(dbResponse.get("status").toString());
       if (dbResponse.get("status").toString().equals("200")) {
-        resBuilder.setUrlList(dbResponse.get("urllist").toString());
+        try {
+          resBuilder.setUrlList(dbResponse.get("urllist").toString());
+        } catch (NullPointerException e) {
+          resBuilder.setUrlList("NULL_POINTER_EXCEPTION");
+        }
       }
-      Session.UrlListResponse response = resBuilder.build();
+    Session.UrlListResponse response = resBuilder.build();
       responseObserver.onNext(response);
       responseObserver.onCompleted();
     }
