@@ -22,14 +22,14 @@ dependencies {
 
 
 task feedParser(type: CreateStartScripts) {
-  mainClassName = "Maalgm.FeedParser"
+  mainClassName = "maalgm.FeedParser"
   applicationName = "feed-parser"
   outputDir = new File(project.buildDir, 'tmp')
   classpath = jar.outputs.files + project.configurations.runtime
 }
 
 task feedParserSample(type: CreateStartScripts) {
-  mainClassName = "Maalgm.FeedParserSample"
+  mainClassName = "maalgm.FeedParserSample"
   applicationName = "feed-parser-sample"
   outputDir = new File(project.buildDir, 'tmp')
   classpath = jar.outputs.files + project.configurations.runtime

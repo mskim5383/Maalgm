@@ -1,4 +1,4 @@
-package Maalgm;
+package maalgm;
 
 import org.junit.After;
 import org.junit.Before;
