@@ -49,7 +49,7 @@ protobuf {
 }
 
 task GrpcServer (type: CreateStartScripts) {
-  mainClassName = "kr.uwcj.cs492.maalgm_server"
+  mainClassName = "kr.uwcj.cs492.MaalgmServer"
   applicationName = "grpc-server"
   outputDir = new File(project.buildDir, 'tmp')
   classpath = jar.outputs.files + project.configurations.runtime
