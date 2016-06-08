@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div id="error">
+  {{ error }}
+</div>
+    <form action='./' method="POST">
+        {% csrf_token %}
+        <input type="text" placeholder="url" id="url" name="url">
+        <button type="submit" class="btn btn-default">Add</button>
+    </form>
+<div id="url_list">
+  {{ url_list }}
+</div>
+{% endblock %}

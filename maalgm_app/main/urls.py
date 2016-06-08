@@ -18,4 +18,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^$', 'main.views.main_page'),
+    url(r'^feed/$', 'main.views.feed'),
+    url(r'^add_url/$', 'main.views.add_url'),
 ]

@@ -106,5 +106,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-GRPC_IP = 'localhost'
-GRPC_PORT = 21035
+GRPC_IP = 'orchestra.kaist.ac.kr'
+GRPC_PORT = 1234

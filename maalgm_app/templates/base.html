@@ -32,7 +32,12 @@
                     <input id="s" type="search" placeholder="Search" style="display:inline-block;">
                     <div id='cssmenu' style="display:inline-block;">
                         <ul>
+                            {% if username %}
+                            {{ username }}
+                            <li><a href="/session/logout/" class="btn btn-dark btn-lg">logout</a></li>
+                            {% else %}
                             <li><a href='/session/login' class="NTnavBar"><span>Login</span></a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </span>

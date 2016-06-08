@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='session.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\rsession.proto\"2\n\x0cLoginRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"2\n\rLoginResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\x12\x11\n\tsessionId\x18\x02 \x01(\t\"\x1e\n\tSessionId\x12\x11\n\tsessionId\x18\x01 \x01(\t\" \n\x0eStatusResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"3\n\rSignUpRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"7\n\x13SessionDataResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\x12\x10\n\x08username\x18\x02 \x01(\t\"1\n\x0f\x46\x65\x65\x64ListRequest\x12\x11\n\tsessionId\x18\x01 \x01(\t\x12\x0b\n\x03url\x18\x02 \x01(\t\"$\n\x10\x46\x65\x65\x64ListResponse\x12\x10\n\x08\x66\x65\x65\x64List\x18\x01 \x03(\t\"\"\n\x0fUrlListResponse\x12\x0f\n\x07urlList\x18\x01 \x03(\t\"2\n\x10InsertUrlRequest\x12\x11\n\tsessionId\x18\x01 \x01(\t\x12\x0b\n\x03url\x18\x02 \x01(\t2\xd6\x02\n\x07session\x12(\n\x05login\x12\r.LoginRequest\x1a\x0e.LoginResponse\"\x00\x12\'\n\x06logout\x12\n.SessionId\x1a\x0f.StatusResponse\"\x00\x12+\n\x06signUp\x12\x0e.SignUpRequest\x1a\x0f.StatusResponse\"\x00\x12\x34\n\x0egetSessionData\x12\n.SessionId\x1a\x14.SessionDataResponse\"\x00\x12\x34\n\x0bgetFeedList\x12\x10.FeedListRequest\x1a\x11.FeedListResponse\"\x00\x12,\n\ngetUrlList\x12\n.SessionId\x1a\x10.UrlListResponse\"\x00\x12\x31\n\tinsertUrl\x12\x11.InsertUrlRequest\x1a\x0f.StatusResponse\"\x00\x42\x0f\n\rkr.uwcj.cs492b\x06proto3')
+  serialized_pb=_b('\n\rsession.proto\"2\n\x0cLoginRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"2\n\rLoginResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\x12\x11\n\tsessionId\x18\x02 \x01(\t\"\x1e\n\tSessionId\x12\x11\n\tsessionId\x18\x01 \x01(\t\" \n\x0eStatusResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"3\n\rSignUpRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"7\n\x13SessionDataResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\x12\x10\n\x08username\x18\x02 \x01(\t\"1\n\x0f\x46\x65\x65\x64ListRequest\x12\x11\n\tsessionId\x18\x02 \x01(\t\x12\x0b\n\x03url\x18\x03 \x01(\t\"4\n\x10\x46\x65\x65\x64ListResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\x12\x10\n\x08\x66\x65\x65\x64List\x18\x02 \x01(\t\"2\n\x0fUrlListResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\x12\x0f\n\x07urlList\x18\x02 \x01(\t\"2\n\x10InsertUrlRequest\x12\x11\n\tsessionId\x18\x02 \x01(\t\x12\x0b\n\x03url\x18\x03 \x01(\t2\xd6\x02\n\x07session\x12(\n\x05login\x12\r.LoginRequest\x1a\x0e.LoginResponse\"\x00\x12\'\n\x06logout\x12\n.SessionId\x1a\x0f.StatusResponse\"\x00\x12+\n\x06signUp\x12\x0e.SignUpRequest\x1a\x0f.StatusResponse\"\x00\x12\x34\n\x0egetSessionData\x12\n.SessionId\x1a\x14.SessionDataResponse\"\x00\x12\x34\n\x0bgetFeedList\x12\x10.FeedListRequest\x1a\x11.FeedListResponse\"\x00\x12,\n\ngetUrlList\x12\n.SessionId\x1a\x10.UrlListResponse\"\x00\x12\x31\n\tinsertUrl\x12\x11.InsertUrlRequest\x1a\x0f.StatusResponse\"\x00\x42\x0f\n\rmaalgm_serverb\x06proto3')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -249,14 +249,14 @@ _FEEDLISTREQUEST = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='sessionId', full_name='FeedListRequest.sessionId', index=0,
-      number=1, type=9, cpp_type=9, label=1,
+      number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
       name='url', full_name='FeedListRequest.url', index=1,
-      number=2, type=9, cpp_type=9, label=1,
+      number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -286,76 +286,14 @@ _FEEDLISTRESPONSE = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='feedList', full_name='FeedListResponse.feedList', index=0,
-      number=1, type=9, cpp_type=9, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=348,
-  serialized_end=384,
-)
-
-
-_URLLISTRESPONSE = _descriptor.Descriptor(
-  name='UrlListResponse',
-  full_name='UrlListResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='urlList', full_name='UrlListResponse.urlList', index=0,
-      number=1, type=9, cpp_type=9, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=386,
-  serialized_end=420,
-)
-
-
-_INSERTURLREQUEST = _descriptor.Descriptor(
-  name='InsertUrlRequest',
-  full_name='InsertUrlRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='sessionId', full_name='InsertUrlRequest.sessionId', index=0,
+      name='status', full_name='FeedListResponse.status', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='url', full_name='InsertUrlRequest.url', index=1,
+      name='feedList', full_name='FeedListResponse.feedList', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -373,8 +311,84 @@ _INSERTURLREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=422,
-  serialized_end=472,
+  serialized_start=348,
+  serialized_end=400,
+)
+
+
+_URLLISTRESPONSE = _descriptor.Descriptor(
+  name='UrlListResponse',
+  full_name='UrlListResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='status', full_name='UrlListResponse.status', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='urlList', full_name='UrlListResponse.urlList', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=402,
+  serialized_end=452,
+)
+
+
+_INSERTURLREQUEST = _descriptor.Descriptor(
+  name='InsertUrlRequest',
+  full_name='InsertUrlRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='sessionId', full_name='InsertUrlRequest.sessionId', index=0,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='url', full_name='InsertUrlRequest.url', index=1,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=454,
+  serialized_end=504,
 )
 
 DESCRIPTOR.message_types_by_name['LoginRequest'] = _LOGINREQUEST
@@ -460,7 +474,7 @@ _sym_db.RegisterMessage(InsertUrlRequest)
 
 
 DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\rkr.uwcj.cs492'))
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\rmaalgm_server'))
 import abc
 from grpc.beta import implementations as beta_implementations
 from grpc.framework.common import cardinality

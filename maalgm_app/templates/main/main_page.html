@@ -4,7 +4,12 @@
 <header id="top" class="header0">
     <div class="text-vertical-center">
             <h1> MAALGM </h1>
+            {% if username %}
+            {{ username }}
+            <a href="/session/logout/" class="btn btn-dark btn-lg">logout</a>
+            {% else %}
             <a href="/session/login/" class="btn btn-dark btn-lg">Start Maalgm</a>
+            {% endif %}
     </div>
 </header>
 {% endblock %}
